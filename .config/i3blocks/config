@@ -1,0 +1,75 @@
+# i3blocks config file
+#
+# Please see man i3blocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocks
+#
+# List of valid properties:
+#
+# align
+# color
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
+
+# Global properties
+#
+# The top properties below are applied to every block, but can be overridden.
+# Each block command defaults to the script name to avoid boilerplate.
+# Change $SCRIPT_DIR to the location of your scripts!
+# SCRIPT_DIR=~/.config/i3blocks/scripts
+command=$SCRIPT_DIR/$BLOCK_NAME
+separator_block_width=15
+markup=none
+
+# Guess the weather hourly
+[weather]
+command=curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo
+interval=3600
+color=#A4C2F4
+min_width=350
+align=center
+
+# Query my default IP address only on startup
+[ip]
+command=curl icanhazip.com | awk '{ print "IP :" $1 }'
+interval=once
+color=#91E78B
+interval=once
+min_width=300
+align=center
+
+
+# The type defaults to "mem" if the instance is not specified.
+[memory]
+command=free | grep Mem | awk '{print $3/$2 * 100.0}' | sed "s/\([0-9]*\)\.[0-9]*/\1%/"
+label=  
+separator=false
+interval=30
+interval=1
+
+[swap]
+command=free | grep Swap | awk '{print $3/$2 * 100.0}' | sed "s/\([0-9]*\)\.?[0-9]*/\1%/; s/0/0%/"
+label= 
+separator=true
+interval=30
+min_width=80
+align=left
+interval=1
+
+[cpu_usage]
+label=   
+command=top -b -n1 | grep "Cpu(s)" | awk '{printf "%.1f\n", $2 + $4"%"}'
+interval=1
+min_width=160
+align=left
+interval=1
+

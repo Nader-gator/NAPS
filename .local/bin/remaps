@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# All key remaping goes here, maps assuming a standard keyboard
+
+# reset previous maps
+setxkbmap -option
+
+
+# Increase key speed via a rate change
+xset r rate 300 50
+
+lsusb | grep HHKB &>/dev/null || (
+    # Map the caps lock key control
+    setxkbmap -option caps:ctrl_modifier
+    # make the left win button the alt
+    setxkbmap -option altwin:swap_lalt_lwin
+    # Turn off the caps lock if on since there is no longer a key for it.
+    xset -q | grep "Caps Lock:\s*on" && xdotool key Caps_Lock
+)

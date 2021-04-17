@@ -1,0 +1,3 @@
+#!/bin/bash
+
+lsyncd -log all -nodaemon -delay 0 -rsyncssh $1 $2 $3

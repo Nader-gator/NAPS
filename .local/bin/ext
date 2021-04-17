@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# all purpose extraction script
+# if -c is given, extracts in the same folder, otherwise will extract in a new folder
+
+while getopts "c" o; do
+    case "${o}" in
+	c) extracthere="True" ;;
+esac done
+
+if [ -z "$extracthere" ]; then
+	archive="$(readlink -f "$*")" &&
+	directory="$(echo "$archive" | sed 's/\.[^\/.]*$//')" &&
+	mkdir -p "$directory" &&
+	cd "$directory" || exit 1
+else
+	archive="$(readlink -f "$(echo "$*" | cut -d' ' -f2)" 2>/dev/null)"
+fi
+
+[ -z "$archive" ] && printf "Give archive to extract as argument.\\n" && exit 1
+
+if [ -f "$archive" ] ; then
+	case "$archive" in
+		*.tar.bz2|*.tbz2) tar xvjf "$archive" ;;
+		*.tar.xz) tar -xf "$archive" ;;
+		*.tar.gz|*.tgz) tar xvzf "$archive" ;;
+		*.tar.zst) tar -I zstd -xf "$archive" ;;
+		*.gz) gunzip "$archive" ;;
+		*.tar) tar xvf "$archive" ;;
+		*.zip) unzip "$archive" ;;
+		*) printf "extract: '%s' - unknown archive method\\n" "$archive" ;;
+	esac
+else
+	printf "File \"%s\" not found.\\n" "$archive"
+fi

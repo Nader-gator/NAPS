@@ -1,0 +1,42 @@
+#!/bin/zsh
+
+amount=${2:-"10 px or 10 ppt"}
+wiggle="0.05"
+
+# recursively search for worplaces, assign them, then search for the active node
+# since there's only one active node, only that node and it's parent workplace 
+# will be returned
+read x y h w wX wY wH wW dH < <(echo $(i3-msg -t get_tree | jq 'recurse(.nodes[])
+    | select(.type=="workspace") as $ws 
+    | recurse(.nodes[]) 
+    | select(.focused==true) 
+    | .rect.x, .rect.y, .rect.height, .rect.width,
+      $ws.rect.x, $ws.rect.y, $ws.rect.height, $ws.rect.width,
+      .deco_rect.height'
+    ))
+case $(tr "[:upper:]" "[:lower:]" <<< $1) in
+    down)
+        # is at the botoom
+         [ $(echo "($y + $h) / ($wY + $wH) > 1 - $wiggle" | bc -l) = 1 ] &&
+            i3-msg resize shrink height $2 ||
+            i3-msg resize grow height $2
+        ;;
+    up)
+        # is at the top
+        [ $(echo " ($y - $dH) - $wY < $wiggle * $wH" | bc -l) = 1 ] &&
+            i3-msg resize shrink height $2 ||
+            i3-msg resize grow height $2
+        ;;
+    left)
+        # is on the left
+        [ $(echo "$x - $wX < $wiggle * $wW" | bc -l) = 1 ] &&
+            i3-msg resize shrink width $2 ||
+            i3-msg resize grow width $2
+        ;;
+    right)
+        # is on the right
+        [ $(echo "($x + $w) / ($wX + $wW) > 1 - $wiggle" | bc -l) = 1 ] &&
+            i3-msg resize shrink width $2 ||
+            i3-msg resize grow width $2
+        ;;
+esac

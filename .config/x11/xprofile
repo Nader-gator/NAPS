@@ -1,0 +1,13 @@
+#!/bin/sh
+. ${XDG_CONFIG_HOME:-$HOME/.config}/shell/profile
+# resources must be loaded synchronously before getting processes that need them, like i3 and picom
+xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources
+xrdb -merge ${XDG_CONFIG_HOME:-$HOME/.config}/x11/xresources-$(hostname) # device specific
+
+setbg &			# set the background with the `setbg` script
+picom -b --experimental-backends &      # compositor for transparency and fixing window tearing
+(xset s 1800 1800; xset dpms 1800 1800 1800) &  # screen blanking after 30 minutes
+dunst &			# dunst for notifications
+unclutter &		# Remove mouse when idle
+pulseaudio --start &
+remaps &		# run the remaps script, switching caps/esc and more; check it for more info

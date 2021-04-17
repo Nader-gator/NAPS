@@ -1,0 +1,80 @@
+#!/bin/zsh
+
+# Use $XINITRC variable if file exists.
+[ -f "$XINITRC" ] && alias startx="startx $XINITRC"
+
+# sudo not required for some system commands
+for x in mount umount sv pacman updatedb su ; do
+	alias $x="sudo $x"
+done
+
+
+# <WIP>
+alias timers='systemctl list-timers'
+alias bu-logs='journalctl -fu borgmatic.service'
+alias bu-start='sudo systemctl start --no-block borgmatic.service'
+alias bu-stop='sudo systemctl stop --no-block borgmatic.service'
+alias bu-status='systemctl status borgmatic.service'
+alias buc-logs='journalctl -fu borgmatic-check.service'
+alias buc-start='sudo systemctl start --no-block borgmatic-check.service'
+alias buc-stop='sudo systemctl stop --no-block borgmatic-check.service'
+alias buc-status='systemctl status borgmatic-check.service'
+alias vpn-logs='journalctl -fu docker-openvpn@lab.service'
+alias vpn-start='sudo systemctl start --no-block docker-openvpn@lab.service'
+alias vpn-stop='sudo systemctl stop --no-block docker-openvpn@lab.service'
+alias vpn-status='systemctl status docker-openvpn@lab.service'
+alias vi='nvim'
+alias nmd='networkmanager_dmenu &>/dev/null &'
+alias dcp='docker-compose'
+# </WIP>
+
+# Colorize commands when possible.
+alias \
+	ls="ls -hN --color=auto --group-directories-first" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	ccat="highlight --out-format=ansi"
+
+# These common commands are just too long! Abbreviate them.
+alias \
+	ka="killall" \
+	g="git" \
+	sdn="sudo shutdown -h now" \
+	e="$EDITOR" \
+	v="$EDITOR" \
+	p="sudo pacman" \
+	z="zathura" \
+    s="sudo -E " \ 
+    lf="TERM=screen-256color lf" \
+    vi="nvim" \
+    dcp="docker-compose" \
+    pdf="zathura" \
+    img="sxiv" \
+    py="python3"
+
+alias \
+	magit="nvim -c MagitOnly" \
+	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/zshnameddirrc" \
+	# weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
+
+# WIP:
+s-ag(){
+# logs into with the rsa key so no need to input password every time
+eval `ssh-agent -s`
+ssh-add ~/.ssh/id_rsa
+}
+list-iommu(){
+# lists all the IOMMU devices
+ for g in /sys/kernel/iommu_groups/*;
+ do
+     echo "IOMMU Group ${g##*/}:";
+     for d in $g/devices/*;
+     do
+         echo -e "\t$(lspci -nns ${d##*/})";
+     done;
+ done;
+}
+reload(){
+    # reload zsh
+    source ~/.zshrc
+}

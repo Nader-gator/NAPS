@@ -1,0 +1,57 @@
+location:
+  source_directories:
+    - /
+  repositories:
+    - {{ BORG_REMOTE_REPO }}
+    - {{ BORG_LOCAL_REPO }}
+  exclude_patterns:
+    - "*.pyc"
+    - "**/node_modules"
+    - "**/*cache*"
+    - /data/media
+    - /media
+    - /dev
+    - /proc
+    - /sys
+    - /tmp
+    - /run
+storage:
+  encryption_passphrase: {{ BORG_PASSPHRASE }}
+  checkpoint_interval: 900
+  relocated_repo_access_is_ok: true
+  ssh_command: ssh -i /home/nader/.ssh/id_ed25519
+  extra_borg_options:
+    # init: --make-parent-dirs
+    # prune: --save-space
+    create: --stats # --list
+    # check: --save-space
+retention:
+  keep_hourly: 48
+  keep_daily: 14
+  keep_weekly: 8
+  keep_monthly: 12
+  keep_yearly: 2
+consistency:
+  checks:
+    - disabled
+  # check_repositories:
+  #   - /media/nader/Backup/borg-backups/lab.borg
+hooks:
+  before_backup:
+    - echo "Starting a backup."
+  before_prune:
+    - echo "Starting pruning."
+  before_check:
+    - echo "Starting checks."
+  after_backup:
+    - echo "Finished a backup."
+  after_prune:
+    - echo "Finished pruning."
+  after_check:
+    - echo "Finished checks."
+  on_error:
+    - echo "Error during prune/create/check."
+  before_everything:
+    - echo "Starting actions."
+  after_everything:
+    - echo "Completed actions."

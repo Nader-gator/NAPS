@@ -1,0 +1,32 @@
+{
+    "languageserver": {
+        "clangd": {
+            "command": "clangd",
+            "rootPatterns": [
+                "compile_flags.txt",
+                "compile_commands.json"
+            ],
+            "filetypes": [
+                "c",
+                "cc",
+                "cpp",
+                "c++",
+                "objc",
+                "objcpp"
+            ]
+        }
+    },
+    "python.analysis.typeCheckingMode": "basic",
+    "python.linting.mypyEnabled": false,
+    "python.formatting.provider": "black",
+    "python.formatting.autopep8Args": [
+        "--max-line-length=100"
+    ],
+    "diagnostic.virtualText": false,
+    "diagnostic.virtualTextPrefix": ">>> ",
+    "diagnostic.messageTarget": "float",
+    "coc.preferences.formatOnSaveFiletypes": [
+        "*"
+    ],
+    "diagnostic.level": "warning"
+}

@@ -1,0 +1,8 @@
+SHELL=/bin/zsh
+
+@runatreboot,nice(15) 30 ~/.local/bin/cron-run ~/.config/crontab/cron.h-hour/
+@runatreboot,nice(15) 60 ~/.local/bin/cron-run ~/.config/crontab/cron.hourly/
+@runatreboot,nice(15) 1d ~/.local/bin/cron-run ~/.config/crontab/cron.daily/
+@nice(15) 7d ~/.local/bin/cron-run ~/.config/crontab/cron.weekly/
+@nice(15) 1m ~/.local/bin/cron-run ~/.config/crontab/cron.monthly/
+

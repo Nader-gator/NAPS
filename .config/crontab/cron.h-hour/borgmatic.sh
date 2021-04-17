@@ -1,0 +1,1 @@
+borgmatic --syslog-verbosity 1 -c //.config/borg-config.yaml

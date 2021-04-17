@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+for file in $1*[^logs];
+do
+    base=$(basename $file)
+    filepath=$(realpath $1)
+    basedir=$(basename $(dirname "$filepath/$base"))
+    mkdir -p "$HOME/.cronlogs/$basedir"
+    source $file >> "$HOME/.cronlogs/$basedir/$base.log" 2>&1
+done

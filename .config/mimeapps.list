@@ -1,0 +1,17 @@
+[Default Applications]
+
+# xdg-open will use these settings to determine how to open filetypes.
+# the .desktop files are in in ~/.local/share/applications/
+
+text/x-shellscript=text.desktop;
+x-scheme-handler/mailto=mail.desktop;
+text/plain=text.desktop;
+application/postscript=pdf.desktop;
+application/pdf=pdf.desktop;
+image/png=img.desktop;
+image/jpeg=img.desktop;
+image/gif=img.desktop;
+video/x-matroska=video.desktop
+inode/directory=file.desktop
+x-scheme-handler/webcal=brave-browser.desktop
+x-scheme-handler/postman=Postman.desktop

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# a script to quickly compile files
+
+file=$(readlink -f "$1")
+dir=${file%/*}
+base="${file%.*}"
+ext="${file##*.}"
+
+cd "$dir" || exit 1
+
+case "$ext" in
+	# Try to keep these cases in alphabetical order.
+	c) cc "$file" -o "$base" && "$base" ;;
+	cpp) g++ "$file" -o "$base" && "$base" ;;
+	go) go run "$file" ;;
+	py) python "$file" ;;
+	rs) cargo build ;;
+	*) head -n1 "$file" | grep "^#!/" | sed "s/^#!//" | xargs -r -I % "$file" ;;
+esac

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+0 * * * * root PATH=$PATH:/usr/bin:/usr/local/bin /root/.local/bin/borgmatic --syslog-verbosity 1
+
+

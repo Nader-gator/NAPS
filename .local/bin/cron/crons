@@ -1,0 +1,2 @@
+#Mins  Hours  Days   Months  Day of the week
+*     *      *      *       *                  /bin/echo "I don't really like cron"

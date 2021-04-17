@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =6
+let g:netrw_dirhist_6='/home/nader/CodeStuff/vero-front-end/.vscode.example'
+let g:netrw_dirhist_5='/home/nader/CodeStuff/vero-revamp/.direnv'
+let g:netrw_dirhist_4='/home/nader/CodeStuff/vero-revamp/ipython'
+let g:netrw_dirhist_3='/home/nader/CodeStuff/vero-revamp/src/providers/yardi/tests'
+let g:netrw_dirhist_2='/home/nader/CodeStuff/docker-containers/sonarr/config'
+let g:netrw_dirhist_1='/etc/borgmatic'
+let g:netrw_dirhist_0='/home/nader/CodeStuff/docker-containers'
+let g:netrw_dirhist_9='/home/nader/CodeStuff/vero-revamp/.direnv'
+let g:netrw_dirhist_8='/media/nader/Backup/borg-backups/backup.borg'
+let g:netrw_dirhist_7='/home/nader/CodeStuff/notes'

@@ -1,0 +1,7 @@
+#if HOME_SETUP == 1
+    *.dpi: 120
+    *.polybarh: 30
+#else
+    *.dpi: 240
+    *.polybarh: 50
+#endif
